@@ -11,9 +11,9 @@ RUN yum -y install wget ca-certificates
 RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
 # Enable Yum repositories to pull App Protect dependencies:
 #RUN subscription-manager register --org=${RHEL_ORGANIZATION} --activationkey=${RHEL_ACTIVATION_KEY} \
-&&yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional rhel-7-
-server-optional-rpms \
-&& rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+#&&yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional rhel-7-
+#server-optional-rpms \
+RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
 && yum clean all
 # Install NGINX App Protect:
 RUN yum -y install app-protect app-protect-attack-signatures \
