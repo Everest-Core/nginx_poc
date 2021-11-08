@@ -4,7 +4,7 @@ FROM centos
 # and copy to the build context:
 
 #COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
-RUN echo "build patitas2"
+RUN echo "build patitas"
 # Install prerequisite packages:
 RUN yum -y install wget ca-certificates
 # Add NGINX Plus repo to Yum:
