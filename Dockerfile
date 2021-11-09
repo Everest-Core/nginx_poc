@@ -11,9 +11,12 @@ RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.4.re
 RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-7.repo
 
 # Install NGINX App Protect:
-RUN --mount=type=secret,id=nginx-crt,dst=/etc/ssl/nginx/nginx-repo.crt,mode=0644 \
-    --mount=type=secret,id=nginx-key,dst=/etc/ssl/nginx/nginx-repo.key,mode=0644 \
-    yum -y install app-protect \
+#RUN --mount=type=secret,id=nginx-crt,dst=/etc/ssl/nginx/nginx-repo.crt,mode=0644 \
+#    --mount=type=secret,id=nginx-key,dst=/etc/ssl/nginx/nginx-repo.key,mode=0644 \
+RUN mkdir -p /etc/ssl/nginx/
+
+COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
+RUN  yum -y install app-protect \
     && yum clean all \
     && rm -rf /var/cache/yum
 
