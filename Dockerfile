@@ -29,4 +29,4 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 #COPY entrypoint.sh /root/
 
 #CMD ["sh", "/root/entrypoint.sh"]
-CMD ["/usr/sbin/nginx"]
+CMD ["nginx", "-g", "daemon off;"]
