@@ -31,7 +31,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 # Copy configuration files:
 #COPY nginx.conf custom_log_format.json /etc/nginx/
 RUN chown -R 999:998 /usr/share/ts /var/log/app_protect /opt/app_protect /etc/app_protect /etc/nginx/nginx.conf /var/
-RUN chmod -R 777 /var/run
+RUN chmod -R 777 /var/
 
 USER 999
 
