@@ -30,8 +30,15 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 # Copy configuration files:
 #COPY nginx.conf custom_log_format.json /etc/nginx/
-RUN chmod 777 -R /usr/share/ts /var/log/app_protect /opt/app_protect /etc/app_protect /etc/nginx/nginx.conf /var/
-RUN chmod -R 777 /var/
+#RUN chmod 777 -R /usr/share/ts /var/log/app_protect /opt/app_protect /etc/app_protect /etc/nginx/nginx.conf /var/
+#RUN chmod -R 777 /var/
+
+RUN set -x \
+	&& chmod go+w /var/cache/nginx \
+	&& sed -i -e '/listen/!b' -e '/80;/!b' -e 's/80;/8080;/' /etc/nginx/conf.d/default.conf \
+	&& sed -i -e '/user/!b' -e '/nginx/!b' -e '/nginx/d' /etc/nginx/nginx.conf \
+	&& sed -i 's!/var/run/nginx.pid!/var/cache/nginx/nginx.pid!g' /etc/nginx/nginx.conf
+
 COPY entrypoint.sh /tmp
 
 EXPOSE 80 8080 443
