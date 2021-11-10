@@ -41,6 +41,6 @@ RUN set -x \
 
 COPY entrypoint.sh /tmp
 
-EXPOSE 80 8080 443
+EXPOSE 8080
 
 CMD ["sh", "/tmp/entrypoint.sh"]
