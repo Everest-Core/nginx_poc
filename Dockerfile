@@ -16,17 +16,25 @@ RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-7.rep
 RUN mkdir -p /etc/ssl/nginx/
 
 COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
+
+ADD nginx.conf /etc/nginx/
+
 RUN  yum -y install app-protect \
     && yum clean all \
     && rm -rf /var/cache/yum
 
 # Forward request logs to Docker log collector:
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+    && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && mkdir -p /var/cache/nginx/client_temp
 
 # Copy configuration files:
 #COPY nginx.conf custom_log_format.json /etc/nginx/
-#COPY entrypoint.sh /root/
+RUN chown -R 999:998 /usr/share/ts /var/log/app_protect /opt/app_protect /etc/app_protect /etc/nginx/nginx.conf /var/
+RUN chmod -R 777 /var/run
 
-#CMD ["sh", "/root/entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+USER 999
+
+COPY entrypoint.sh /tmp
+
+CMD ["sh", "/tmp/entrypoint.sh"]
