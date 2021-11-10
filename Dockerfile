@@ -16,6 +16,7 @@ RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-7.rep
 RUN mkdir -p /etc/ssl/nginx/
 
 COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
+COPY default.conf /etc/nginx/conf.d/
 
 ADD nginx.conf /etc/nginx/
 
