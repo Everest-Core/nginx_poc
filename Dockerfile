@@ -34,4 +34,6 @@ RUN chmod 777 -R /usr/share/ts /var/log/app_protect /opt/app_protect /etc/app_pr
 RUN chmod -R 777 /var/
 COPY entrypoint.sh /tmp
 
+EXPOSE 80 8080 443
+
 CMD ["sh", "/tmp/entrypoint.sh"]
