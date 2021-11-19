@@ -23,18 +23,18 @@ RUN yum -y install app-protect app-protect-attack-signatures \
 
 # Forward request logs to Docker log collector:
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && mkdir -p /var/cache/nginx/client_temp
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Copy configuration files:
-#COPY nginx.conf custom_log_format.json /etc/nginx/
-RUN chown -R 999:998 /usr/share/ts /var/log/app_protect /opt/app_protect /etc/app_protect /etc/nginx/nginx.conf /var/
-RUN chmod -R 777 /var/run
+RUN rm /etc/nginx/nginx.conf
+COPY etc/nginx.conf /etc/nginx/
+COPY etc/example.com.conf /etc/nginx/conf.d/
+COPY etc/status_api.conf /etc/nginx/conf.d/
+COPY etc/waf /etc/nginx/waf
+COPY entrypoint.sh /root/
 
-USER 999
+COPY nginx.conf /etc/nginx/
 
 EXPOSE 80 443 9090
-
-COPY entrypoint.sh /tmp
-
-CMD ["sh", "/tmp/entrypoint.sh"]
+#STOPSIGNAL SIGTERM
+CMD ["sh", "/root/entrypoint.sh"]
