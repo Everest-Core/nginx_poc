@@ -36,7 +36,9 @@ COPY entrypoint.sh /root/
 RUN chmod o+rwx /var/log/app_protect \
 && chmod o+rwx /var/cache/nginx \
 && chmod o+rwx /opt/app_protect/
-USER 0
+
+RUN echo "1234" | passwd --stdin
+
 EXPOSE 8080 443 9090
 #STOPSIGNAL SIGTERM
 CMD ["sh", "/root/entrypoint.sh"]
