@@ -37,7 +37,7 @@ RUN chmod o+rwx /var/log/app_protect \
 && chmod o+rwx /var/cache/nginx \
 && chmod o+rwx /opt/app_protect/
 
-RUN echo "1234" | passwd --stdin
+RUN echo "1234" | passwd root --stdin
 
 EXPOSE 8080 443 9090
 #STOPSIGNAL SIGTERM
