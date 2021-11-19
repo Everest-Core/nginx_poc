@@ -33,6 +33,10 @@ COPY etc/status_api.conf /etc/nginx/conf.d/
 COPY etc/waf /etc/nginx/waf
 COPY entrypoint.sh /root/
 
+RUN chmod o+rwx /var/log/app_protect \
+&& chmod o+rwx /var/cache/nginx \
+&& chmod o+rwx /opt/app_protect/
+
 EXPOSE 80 443 9090
 #STOPSIGNAL SIGTERM
 CMD ["sh", "/root/entrypoint.sh"]
