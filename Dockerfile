@@ -33,8 +33,6 @@ COPY etc/status_api.conf /etc/nginx/conf.d/
 COPY etc/waf /etc/nginx/waf
 COPY entrypoint.sh /root/
 
-COPY nginx.conf /etc/nginx/
-
 EXPOSE 80 443 9090
 #STOPSIGNAL SIGTERM
 CMD ["sh", "/root/entrypoint.sh"]
