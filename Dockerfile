@@ -18,7 +18,7 @@ RUN mkdir -p /etc/ssl/nginx/
 COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
 COPY default.conf /etc/nginx/conf.d/
 
-ADD nginx.conf /etc/nginx/
+#ADD nginx.conf /etc/nginx/
 
 RUN  yum -y install app-protect \
     && yum clean all \
@@ -39,9 +39,14 @@ RUN set -x \
 	&& sed -i -e '/listen/!b' -e '/80;/!b' -e 's/80;/8080;/' /etc/nginx/conf.d/default.conf \
 	&& sed -i -e '/user/!b' -e '/nginx/!b' -e '/nginx/d' /etc/nginx/nginx.conf \
 	&& sed -i 's!/var/run/nginx.pid!/var/cache/nginx/nginx.pid!g' /etc/nginx/nginx.conf
+	
+COPY etc/nginx.conf /etc/nginx/
+#COPY etc/example.com.conf /etc/nginx/conf.d/
+COPY etc/status_api.conf /etc/nginx/conf.d/
+COPY etc/waf /etc/nginx/waf
 
 COPY entrypoint.sh /tmp
 
-EXPOSE 8080
+EXPOSE 8080 443 8443 9090
 
 CMD ["sh", "/tmp/entrypoint.sh"]
