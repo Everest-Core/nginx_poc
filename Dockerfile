@@ -28,12 +28,12 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 # Copy configuration files:
 #COPY nginx.conf custom_log_format.json /etc/nginx/
-RUN chown -R 999:998 /usr/share/ts /var/log/app_protect /opt/app_protect /etc/app_protect /etc/nginx/nginx.conf /var/
+RUN chown -R 999:998 /usr/share/ts && chown -R 999:998 /var/log/app_protect && chown -R 999:998 /opt/app_protect && chown -R 999:998 /etc/app_protect && chown -R 999:998 /etc/nginx/nginx.conf && chown -R 999:998 /var/cache/nginx/proxy_temp
 RUN chmod -R 777 /var/run
 
 USER 999
 
-EXPOSE 80 443 9090
+EXPOSE 8080 443 9090
 
 COPY entrypoint.sh /tmp
 
