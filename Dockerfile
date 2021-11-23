@@ -35,6 +35,8 @@ COPY etc/nginx.conf /etc/nginx/
 #COPY etc/example.com.conf /etc/nginx/conf.d/
 COPY etc/status_api.conf /etc/nginx/conf.d/
 COPY etc/waf /etc/nginx/waf
+COPY default.conf /etc/nginx/conf.d/
+
 
 USER 999
 
